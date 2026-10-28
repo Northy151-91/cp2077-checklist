@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#10141b" />
+<meta name="color-scheme" content="dark" />
+<meta name="description" content="Offline-capable mobile checklist for Cyberpunk 2077 Update 2.5 Ghost Netrunner, level 1-60." />
+<link rel="manifest" href="manifest.webmanifest" />
+<link rel="icon" href="icon-192.png" type="image/png" />
+<title>GHOST // Netrunner Checklist</title>
+<style>
+  :root {--bg:#0e1218;--panel:#171e28;--panel2:#1e2936;--ink:#eff6f6;--muted:#a2b2c2;--line:#374350;--yellow:#f8dc49;--blue:#59d0e1;--green:#78dea8;--red:#ff9292;--tap:50px;--radius:16px;}
+  * {box-sizing:border-box;} html{scroll-behavior:smooth} body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;line-height:1.4;-webkit-tap-highlight-color:transparent}
+  button,input{font:inherit} button{cursor:pointer} button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+  .shell{max-width:720px;margin:auto;min-height:100vh;padding-bottom:calc(100px + env(safe-area-inset-bottom))}
+  .mast{padding:24px 17px 10px;background:linear-gradient(155deg,#20292d,#0f131a 76%);border-bottom:1px solid var(--line)}
+  .eyebrow{color:var(--yellow);font-size:.72rem;font-weight:900;letter-spacing:.14em;text-transform:uppercase}
+  h1{font-size:clamp(1.65rem,7vw,2.25rem);line-height:1.05;margin:9px 0 7px;letter-spacing:.015em;font-weight:900}
+  .deck{font-size:.88rem;color:var(--muted);margin:0 0 16px}
+  .hero-progress{background:#111920;border:1px solid var(--line);border-radius:var(--radius);padding:16px;display:grid;grid-template-columns:auto 1fr;align-items:center;gap:15px}
+  .percent{font-size:2.1rem;font-weight:900;color:var(--yellow);letter-spacing:-.05em;min-width:85px}
+  .small{font-size:.79rem;color:var(--muted)} .numbers{font-size:.86rem;font-weight:750;margin-bottom:7px}
+  .bar{height:11px;border-radius:99px;background:#34424a;overflow:hidden;position:relative}
+  .bar > div{height:100%;width:0%;background:linear-gradient(90deg,var(--blue),var(--yellow));transition:width .2s}
+  .stats{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:14px 0 3px;color:var(--muted);font-size:.75rem;flex-wrap:wrap}
+  .stats .end{color:var(--green);font-weight:700}
+  main{padding:14px 14px 8px}
+  .sectionbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:9px}
+  h2{font-size:1.25rem;margin:0;font-weight:850}
+  h3{font-size:1rem;margin:0 0 5px}
+  .section-caption{color:var(--muted);font-size:.86rem;line-height:1.5;margin:0 0 15px}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:14px;margin-bottom:12px}
+  .title-inline{display:flex;gap:10px;justify-content:space-between;align-items:center}
+  .tag{font-size:.65rem;text-transform:uppercase;letter-spacing:.04em;font-weight:850;border:1px solid #67623d;color:var(--yellow);background:#3b361f;border-radius:7px;padding:5px 7px;white-space:nowrap}
+  .start-panel{padding:11px 13px}.start-panel summary{cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:9px;list-style:none;min-height:42px}.start-panel summary::-webkit-details-marker{display:none}.start-panel summary strong{font-size:.94rem}.start-sum{display:block;color:var(--muted);font-size:.72rem;font-weight:650;margin-top:3px}
+  .attr-row{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin-top:11px}
+  .attr-row > div{border-radius:9px;background:var(--panel2);text-align:center;padding:10px 1px}
+  .attr-row b{display:block;font-size:1.25rem;color:var(--yellow)}.attr-row span{font-size:.64rem;color:var(--muted)}
+  .switches{display:flex;gap:7px;flex-wrap:wrap;align-items:center;margin:12px 0 14px}
+  .chip{background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:99px;padding:11px 14px;font-size:.86rem;font-weight:650;min-height:45px}
+  .chip.active{color:#10151b;background:var(--yellow);border-color:var(--yellow)}
+  .filter{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:9px;margin:0 0 13px}
+  .filter label{font-size:.83rem;color:var(--muted);display:flex;align-items:center;gap:9px}
+  select,input[type="number"]{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:9px;font-size:1rem;padding:10px;min-height:44px}
+  input[type="number"]{width:75px}
+  .action{min-height:44px;padding:9px 14px;color:var(--ink);background:var(--panel2);border:1px solid var(--line);border-radius:9px;font-weight:700;font-size:.85rem}
+  .action.primary{background:var(--yellow);color:#141821;border-color:var(--yellow)}
+  .action.danger{color:var(--red);border-color:#71444a}
+  .level-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:14px;margin:0 0 12px;scroll-margin-top:14px;transition:border-color .15s}
+  .level-card.complete{border-color:#438166;background:#13251f}
+  .level-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:11px}
+  .level-label{display:flex;align-items:center;gap:10px}
+  .number-bubble{display:flex;width:42px;height:42px;align-items:center;justify-content:center;border-radius:11px;background:var(--yellow);color:#12161d;font-weight:900;font-size:1.1rem;flex-shrink:0}
+  .level-card.complete .number-bubble{background:var(--green)}
+  .level-heading strong{font-size:.97rem}.level-heading .tiny{font-size:.72rem;color:var(--muted)}
+  .complete-label{color:var(--green);font-size:.73rem;font-weight:800}
+  .task{border:1px solid #3c4a56;background:var(--panel2);border-radius:11px;margin:7px 0;min-height:63px;padding:10px 11px;display:flex;align-items:center;gap:12px;cursor:pointer}
+  .task.checked{background:#153127;border-color:#488469}
+  input[type="checkbox"]{width:25px;height:25px;flex:0 0 25px;accent-color:var(--green);margin:0;cursor:pointer}
+  .task .task-name{font-size:.94rem;font-weight:700;line-height:1.25;overflow-wrap:anywhere}
+  .task.checked .task-name{color:#a4ddc1;text-decoration:line-through;text-decoration-thickness:1px}
+  .task .task-type{display:block;font-size:.69rem;letter-spacing:.045em;text-transform:uppercase;color:var(--muted);margin-bottom:2px;font-weight:650}
+  .milestone{margin-top:11px;padding:10px;border-left:3px solid var(--yellow);background:#343021;color:#ffe9a1;border-radius:5px;font-size:.83rem}
+  .full-level{width:100%;margin-top:3px;border:0;background:transparent;color:var(--blue);font-size:.82rem;font-weight:760;padding:8px 2px;text-align:right}
+  .task-list{display:grid;gap:8px}
+  .task-list .task{margin:0;min-height:58px}
+  .group-heading{color:var(--yellow);font-size:.81rem;font-weight:850;letter-spacing:.04em;text-transform:uppercase;margin:23px 0 9px}
+  .group-heading:first-child{margin-top:9px}
+  .empty{text-align:center;background:var(--panel);border:1px dashed var(--line);color:var(--muted);padding:24px 16px;border-radius:var(--radius)}
+  .info{border-left:4px solid var(--blue);padding:12px;background:#172a33;color:#c5e6ef;font-size:.83rem;border-radius:5px;margin:12px 0}
+  .backup-rows{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:12px 0}
+  .backup-rows .action{min-height:52px}
+  .foot-note{font-size:.76rem;color:var(--muted);margin:14px 2px}
+  .nav{position:fixed;bottom:0;left:0;right:0;background:#171e27ee;backdrop-filter:blur(14px);border-top:1px solid var(--line);padding:8px max(10px,env(safe-area-inset-right)) calc(8px + env(safe-area-inset-bottom)) max(10px,env(safe-area-inset-left));z-index:10}
+  .nav-inner{max-width:720px;margin:auto;display:grid;grid-template-columns:repeat(4,1fr);gap:5px}
+  .nav-btn{border:0;color:var(--muted);background:transparent;border-radius:10px;min-height:57px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:2px;font-size:.75rem;font-weight:700}
+  .nav-btn .navico{font-size:1.26rem}.nav-btn.active{background:#3e3b29;color:var(--yellow)}
+  .hide{display:none!important}
+  .toast{position:fixed;z-index:30;bottom:calc(85px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);background:#ddeee4;color:#172c1f;padding:12px 18px;border-radius:30px;font-size:.84rem;font-weight:700;box-shadow:0 8px 30px #0009;max-width:90%;text-align:center;opacity:0;pointer-events:none;transition:opacity .15s}
+  .toast.show{opacity:1}
+  @media(min-width:680px){main{padding:20px 24px}.mast{padding:24px 24px 16px}.task-list.two-col{display:grid;grid-template-columns:1fr 1fr}}
+  @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="shell">
+<header class="mast">
+  <div class="eyebrow">CYBERPUNK 2077 / UPDATE 2.5</div>
+  <h1>GHOST <span style="color:var(--yellow)">//</span> NETRUNNER</h1>
+  <p class="deck">Mobile progression tracker · Base game + Phantom Liberty · Level 1–60</p>
+  <div class="hero-progress" aria-live="polite">
+    <div class="percent" id="pct">0%</div>
+    <div><div class="numbers" id="completeCount">0 / 159 tasks completed</div><div class="bar" role="progressbar" id="overallBar" aria-label="Overall progress" aria-valuemin="0" aria-valuemax="159" aria-valuenow="0"><div id="barFill"></div></div></div>
+  </div>
+  <div class="stats"><span id="levelsSummary">Level tasks: 0 / 118</span><span id="bonusSummary">Extras: 0 / 41</span><span class="end" id="saveStatus">Progress saved on this device</span></div>
+</header>
+<main>
+  <section id="tab-levels" class="tab-content">
+    <details class="panel start-panel">
+      <summary><span><strong>Level 1 attributes</strong><span class="start-sum">INT 5 · COOL 5 · TECH 4 · REF 4 · BODY 4</span></span><span class="tag">START ▾</span></summary>
+      <div class="attr-row"><div><span>INT</span><b>5</b></div><div><span>COOL</span><b>5</b></div><div><span>TECH</span><b>4</b></div><div><span>REF</span><b>4</b></div><div><span>BODY</span><b>4</b></div></div>
+      <div class="small" style="margin-top:10px">Endgame target: 20 INT / 20 COOL / 20 TECH / 15 REF / 6 BODY.</div>
+    </details>
+    <div class="sectionbar"><h2>Level-by-level</h2><button id="nextBtn" class="action primary" type="button">Next unfinished</button></div>
+    <p class="section-caption">Tap the Attribute and Perk boxes independently. Each level has two separate checkboxes.</p>
+    <div class="switches" role="group" aria-label="Level ranges"><button type="button" class="chip active" data-range="early">2–20</button><button type="button" class="chip" data-range="middle">21–40</button><button type="button" class="chip" data-range="late">41–60</button></div>
+    <div class="filter"><label>Display <select id="levelFilter" aria-label="Filter level tasks"><option value="all">All levels</option><option value="todo">Unfinished only</option><option value="done">Completed only</option></select></label><label>Jump to level <input type="number" id="jumpLevel" min="2" max="60" inputmode="numeric" value="2" aria-label="Jump to level" /><button type="button" class="action" id="jumpBtn">Go</button></label></div>
+    <div id="levelList"></div>
+  </section>
+  <section id="tab-bonus" class="tab-content hide"><div class="sectionbar"><h2>Bonus perk points</h2><span class="tag" id="bonusBadge">0 / 15</span></div><p class="section-caption">Spend extra points from skill progression or perk shards when prerequisites permit. These are separate from the guaranteed level-up perk allocation.</p><div class="info">If you purchase a perk here before its scheduled level, mark it as obtained. When that level arrives, mark the scheduled perk box as accounted for and spend that point on another unpurchased perk.</div><div class="task-list" id="bonusList"></div></section>
+  <section id="tab-relic" class="tab-content hide"><div class="sectionbar"><h2>Relic abilities</h2><span class="tag" id="relicBadge">0 / 6</span></div><p class="section-caption">Phantom Liberty only. Relic points use their own point pool, separate from attributes and normal perks.</p><div class="task-list" id="relicList"></div></section>
+  <section id="tab-gear" class="tab-content hide">
+    <div class="sectionbar"><h2>Gear & upgrades</h2><span class="tag" id="gearBadge">0 / 20</span></div>
+    <p class="section-caption">Tick milestones when acquired. You do not need to obtain all of these at the character levels listed in the plan.</p>
+    <div id="gearList"></div>
+    <div class="panel" style="margin-top:25px">
+      <h3>Save, backup & restore</h3>
+      <p class="section-caption" style="margin-bottom:6px">Your ticks are saved automatically in this browser on this device. Back up your progress before changing phones, clearing browser data, or opening the checklist in another browser.</p>
+      <div class="backup-rows"><button type="button" class="action primary" id="exportBtn">↓ Export backup</button><button type="button" class="action" id="importBtn">↑ Import backup</button></div>
+      <input type="file" id="importFile" accept=".json,application/json" class="hide" aria-label="Import JSON progress backup" />
+      <button type="button" class="action danger" id="resetBtn" style="width:100%;margin-top:5px">Reset all checkboxes</button>
+      <div class="info"><strong>Using on Android:</strong> Download the HTML file and open it with your browser. Tap items to tick them off. For a proper home-screen-installed app, upload the companion PWA ZIP contents to any HTTPS website such as GitHub Pages and choose “Add to Home screen” in Chrome.</div>
+    </div>
+    <p class="foot-note">Tracker follows your existing Update 2.5 PDF guide. Game patches or build changes may affect perk prerequisites. Progress stored locally, not synced between devices.</p>
+  </section>
+</main>
+</div>
+<nav class="nav" aria-label="Checklist navigation"><div class="nav-inner">
+  <button class="nav-btn active" data-tab="levels" type="button"><span class="navico">▤</span>Levels</button>
+  <button class="nav-btn" data-tab="bonus" type="button"><span class="navico">✦</span>Bonus</button>
+  <button class="nav-btn" data-tab="relic" type="button"><span class="navico">◇</span>Relic</button>
+  <button class="nav-btn" data-tab="gear" type="button"><span class="navico">⚙</span>Gear / Save</button>
+</div></nav>
+<div class="toast" id="toast" aria-live="polite"></div>
+<script>
+'use strict';
+const BUILD_DATA = {"levels":[{"level":2,"attribute":"Intelligence → 6","perk":"Optimization"},{"level":3,"attribute":"Intelligence → 7","perk":"Eye in the Sky"},{"level":4,"attribute":"Intelligence → 8","perk":"Encryption"},{"level":5,"attribute":"Intelligence → 9","perk":"Hack Queue 1/2"},{"level":6,"attribute":"Cool → 6","perk":"Hack Queue 2/2"},{"level":7,"attribute":"Cool → 7","perk":"Embedded Exploit 1/2"},{"level":8,"attribute":"Cool → 8","perk":"Embedded Exploit 2/2"},{"level":9,"attribute":"Cool → 9","perk":"Focus 1/2"},{"level":10,"attribute":"Intelligence → 10","perk":"Focus 2/2"},{"level":11,"attribute":"Intelligence → 11","perk":"ICEpick"},{"level":12,"attribute":"Intelligence → 12","perk":"Feline Footwork"},{"level":13,"attribute":"Intelligence → 13","perk":"Killer Instinct"},{"level":14,"attribute":"Intelligence → 14","perk":"Painkiller"},{"level":15,"attribute":"Intelligence → 15","perk":"Overclock 1/3"},{"level":16,"attribute":"Technical Ability → 5","perk":"Overclock 2/3"},{"level":17,"attribute":"Technical Ability → 6","perk":"Overclock 3/3"},{"level":18,"attribute":"Technical Ability → 7","perk":"Queue Acceleration 1/3"},{"level":19,"attribute":"Technical Ability → 8","perk":"Queue Acceleration 2/3"},{"level":20,"attribute":"Technical Ability → 9","perk":"Queue Acceleration 3/3"},{"level":21,"attribute":"Cool → 10","perk":"Sublimation"},{"level":22,"attribute":"Cool → 11","perk":"Power Surge"},{"level":23,"attribute":"Cool → 12","perk":"All Things Cyber 1/2"},{"level":24,"attribute":"Cool → 13","perk":"All Things Cyber 2/2"},{"level":25,"attribute":"Cool → 14","perk":"Renaissance Punk"},{"level":26,"attribute":"Cool → 15","perk":"Ninjutsu 1/3"},{"level":27,"attribute":"Reflexes → 5","perk":"Ninjutsu 2/3"},{"level":28,"attribute":"Reflexes → 6","perk":"Ninjutsu 3/3"},{"level":29,"attribute":"Reflexes → 7","perk":"Creeping Death"},{"level":30,"attribute":"Reflexes → 8","perk":"Vanishing Act"},{"level":31,"attribute":"Reflexes → 9","perk":"Slippery"},{"level":32,"attribute":"Technical Ability → 10","perk":"Dash 1/2"},{"level":33,"attribute":"Technical Ability → 11","perk":"Dash 2/2"},{"level":34,"attribute":"Technical Ability → 12","perk":"Can't Touch This"},{"level":35,"attribute":"Technical Ability → 13","perk":"Glutton for War"},{"level":36,"attribute":"Technical Ability → 14","perk":"Health Freak 1/2"},{"level":37,"attribute":"Technical Ability → 15","perk":"Health Freak 2/2"},{"level":38,"attribute":"Intelligence → 16","perk":"License to Chrome 1/3"},{"level":39,"attribute":"Intelligence → 17","perk":"License to Chrome 2/3"},{"level":40,"attribute":"Intelligence → 18","perk":"License to Chrome 3/3"},{"level":41,"attribute":"Intelligence → 19","perk":"Extended Warranty"},{"level":42,"attribute":"Intelligence → 20","perk":"Queue Mastery"},{"level":43,"attribute":"Cool → 16","perk":"Deadeye 1/3"},{"level":44,"attribute":"Cool → 17","perk":"Deadeye 2/3"},{"level":45,"attribute":"Cool → 18","perk":"Deadeye 3/3"},{"level":46,"attribute":"Cool → 19","perk":"California Reaper"},{"level":47,"attribute":"Cool → 20","perk":"Nerves of Tungsten-Steel"},{"level":48,"attribute":"Technical Ability → 16","perk":"Driver Update"},{"level":49,"attribute":"Technical Ability → 17","perk":"Head to Head"},{"level":50,"attribute":"Technical Ability → 18","perk":"High Noon"},{"level":51,"attribute":"Technical Ability → 19","perk":"Data Recycler"},{"level":52,"attribute":"Technical Ability → 20","perk":"Edgerunner"},{"level":53,"attribute":"Reflexes → 10","perk":"Shadowrunner"},{"level":54,"attribute":"Reflexes → 11","perk":"Feedback Loop"},{"level":55,"attribute":"Reflexes → 12","perk":"Speculation"},{"level":56,"attribute":"Reflexes → 13","perk":"Queue Prioritization"},{"level":57,"attribute":"Reflexes → 14","perk":"Queue Hack_Root"},{"level":58,"attribute":"Reflexes → 15","perk":"Air Dash 1/3"},{"level":59,"attribute":"Body → 5","perk":"Air Dash 2/3"},{"level":60,"attribute":"Body → 6","perk":"Air Dash 3/3"}],"bonus":["Feedback Loop","Blind Spot","Shadowrunner","Data Recycler","Comeback Kid","Head to Head","Queue Prioritization","Gag Order","Shinobi Sprint","Ambidextrous","Chrome Constitution","Cyborg","Long Shot","Quick Draw","Dorph-head"],"relic":[{"name":"Emergency Cloaking","description":"Escape pursuit with Optical Camo"},{"name":"Sensory Protocol","description":"Slow time when close to detection"},{"name":"Vulnerability Analytics","description":"Reveal weak points"},{"name":"Machine Learning","description":"Improve weak-point follow-up attacks"},{"name":"Jailbreak","description":"Enable Monowire quickhack capability"},{"name":"Data Tunneling","description":"Spread Control quickhacks via Monowire"}],"geargroups":[{"name":"Cyberware","items":["Tetratronic Rippler cyberdeck","Optical Camo","RAM / RAM-recovery implants","Biomonitor and Blood Pump","Reinforced Tendons or Lynx Paws","Late-game COX-2 (if capacity permits)"]},{"name":"Quickhacks","items":["Ping","Tier 4 Memory Wipe","Reboot Optics","Tier 5 Sonic Shock","Cyberware Malfunction","Short Circuit","Synapse Burnout","System Collapse"]},{"name":"Weapons & milestones","items":["Early-game suppressed Power pistol","Overwatch (Panam questline)","Her Majesty (Get It Together, Phantom Liberty)","Queue Mastery unlocked","Emergency Cloaking unlocked","Level 60 attribute allocation complete"]}],"milestones":{"17":"Overclock fully unlocked","20":"Queue Acceleration complete","30":"Vanishing Act + Optical Camo","40":"License to Chrome complete","42":"Queue Mastery unlocked","52":"Edgerunner unlocked","60":"Level 60 allocation complete"}};
+const STORAGE_KEY = 'cyberpunk_2077_ghost_netrunner_v25_progress_v1';
+const allKeys = [
+  ...BUILD_DATA.levels.flatMap(x=>[`attr_l${x.level}`,`perk_l${x.level}`]),
+  ...BUILD_DATA.bonus.map((_,i)=>`bonus_${i}`),
+  ...BUILD_DATA.relic.map((_,i)=>`relic_${i}`),
+  ...BUILD_DATA.geargroups.flatMap((g,gi)=>g.items.map((_,i)=>`gear_${gi}_${i}`))
+];
+const allowed = new Set(allKeys);
+const state = {checks:{},range:'early',tab:'levels',filter:'all'};
+let storageOk = true;
+function load(){
+  try {const p=JSON.parse(localStorage.getItem(STORAGE_KEY)||'{}');
+    if (p && typeof p==='object' && p.checks && typeof p.checks==='object') {
+      for(const [key,v] of Object.entries(p.checks)) if(allowed.has(key)) state.checks[key]=v===true;
+      if(['early','middle','late'].includes(p.range))state.range=p.range;
+    }
+  } catch(e) {storageOk=false;}
+}
+function save(){
+  try {localStorage.setItem(STORAGE_KEY,JSON.stringify({version:1,checks:state.checks,range:state.range,updated:new Date().toISOString()}));storageOk=true;}
+  catch(e) {storageOk=false;}
+  document.getElementById('saveStatus').textContent=storageOk?'✓ Saved on this device':'⚠ Export a backup (storage blocked)';document.getElementById('saveStatus').style.color=storageOk?'var(--green)':'var(--red)';
+}
+function esc(s){return String(s).replace(/[&<>"']/g,x=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[x]));}
+function isDone(key){return state.checks[key]===true;}
+function labelHTML(key,kind,name,desc=''){
+  return `<label class="task ${isDone(key)?'checked':''}"><input type="checkbox" data-key="${esc(key)}" ${isDone(key)?'checked':''} aria-label="${esc(kind+': '+name)}"><span><span class="task-type">${esc(kind)}</span><span class="task-name">${esc(name)}</span>${desc?`<span class="small" style="display:block;margin-top:5px">${esc(desc)}</span>`:''}</span></label>`;
+}
+function rangeFor(level){return level<=20?'early':level<=40?'middle':'late';}
+function levelDone(level){return isDone(`attr_l${level}`)&&isDone(`perk_l${level}`);}
+function renderLevels(){
+  const items=BUILD_DATA.levels.filter(x=>rangeFor(x.level)===state.range).filter(x=>state.filter==='all'||(state.filter==='done'?levelDone(x.level):!levelDone(x.level)));
+  document.getElementById('levelList').innerHTML=items.length?items.map(l=>{
+    const complete=levelDone(l.level);
+    const milestone=BUILD_DATA.milestones[String(l.level)];
+    return `<article class="level-card ${complete?'complete':''}" id="level-${l.level}">
+      <div class="level-heading"><div class="level-label"><span class="number-bubble">${l.level}</span><div><strong>LEVEL ${l.level}</strong><div class="tiny">${complete?'Both steps complete':'Complete both steps'}</div></div></div><span class="${complete?'complete-label':'small'}">${complete?'✓ COMPLETE':`${Number(isDone(`attr_l${l.level}`))+Number(isDone(`perk_l${l.level}`))} / 2`}</span></div>
+      ${labelHTML(`attr_l${l.level}`,'Attribute point',l.attribute)}
+      ${labelHTML(`perk_l${l.level}`,'Perk point',l.perk)}
+      <button type="button" class="full-level" data-level="${l.level}" data-complete="${complete?'1':'0'}">${complete?'Undo both steps':'✓ Mark both steps complete'}</button>
+      ${milestone?`<div class="milestone"><b>POWER SPIKE:</b> ${esc(milestone)}</div>`:''}
+    </article>`;
+  }).join(''):'<div class="empty">No levels match this filter. Switch to All levels to see every step.</div>';
+  document.querySelectorAll('[data-range]').forEach(b=>{b.classList.toggle('active',b.dataset.range===state.range);b.setAttribute('aria-pressed',String(b.dataset.range===state.range));});
+}
+function renderOther(){
+ document.getElementById('bonusList').innerHTML=BUILD_DATA.bonus.map((name,i)=>labelHTML(`bonus_${i}`,`Bonus perk ${i+1}`,name)).join('');
+ document.getElementById('relicList').innerHTML=BUILD_DATA.relic.map((r,i)=>labelHTML(`relic_${i}`,`Relic ability ${i+1}`,r.name,r.description)).join('');
+ document.getElementById('gearList').innerHTML=BUILD_DATA.geargroups.map((g,gi)=>`<h3 class="group-heading">${esc(g.name)}</h3><div class="task-list">${g.items.map((s,i)=>labelHTML(`gear_${gi}_${i}`,'Upgrade',s)).join('')}</div>`).join('');
+}
+function updateProgress(){
+ const done=allKeys.filter(isDone).length;
+ document.getElementById('pct').textContent=Math.round(done/allKeys.length*100)+'%';
+ document.getElementById('completeCount').textContent=`${done} / ${allKeys.length} tasks completed`;
+ document.getElementById('barFill').style.width=(done/allKeys.length*100)+'%';
+ document.getElementById('overallBar').setAttribute('aria-valuenow',String(done));
+ const l=BUILD_DATA.levels.reduce((s,x)=>s+Number(isDone(`attr_l${x.level}`))+Number(isDone(`perk_l${x.level}`)),0);
+ const b=BUILD_DATA.bonus.filter((_,i)=>isDone(`bonus_${i}`)).length;
+ const r=BUILD_DATA.relic.filter((_,i)=>isDone(`relic_${i}`)).length;
+ const g=BUILD_DATA.geargroups.flatMap((grp,gi)=>grp.items.map((_,i)=>`gear_${gi}_${i}`)).filter(isDone).length;
+ document.getElementById('levelsSummary').textContent=`Level tasks: ${l} / 118`;
+ document.getElementById('bonusSummary').textContent=`Extras: ${b+r+g} / 41`;
+ document.getElementById('bonusBadge').textContent=`${b} / 15`;
+ document.getElementById('relicBadge').textContent=`${r} / 6`;
+ document.getElementById('gearBadge').textContent=`${g} / 20`;
+}
+function refresh(){renderLevels();renderOther();updateProgress();save();}
+function tab(name){
+ if(!['levels','bonus','relic','gear'].includes(name))return;
+ state.tab=name;
+ document.querySelectorAll('.tab-content').forEach(n=>n.classList.toggle('hide',n.id!==`tab-${name}`));
+ document.querySelectorAll('.nav-btn').forEach(n=>{let active=n.dataset.tab===name;n.classList.toggle('active',active);n.setAttribute('aria-current',active?'page':'false');});
+ window.scrollTo({top:0,behavior:'instant'});
+}
+function goToLevel(n){
+ let lvl=Number(n);
+ if(!Number.isInteger(lvl)||lvl<2||lvl>60){toast('Choose a level from 2 to 60');return;}
+ state.range=rangeFor(lvl);state.filter='all';document.getElementById('levelFilter').value='all';tab('levels');renderLevels();save();
+ document.getElementById('jumpLevel').value=String(lvl);
+ requestAnimationFrame(()=>document.getElementById(`level-${lvl}`)?.scrollIntoView({block:'start',behavior:'smooth'}));
+}
+function next(){const first=BUILD_DATA.levels.find(x=>!levelDone(x.level));if(first)goToLevel(first.level);else toast('Every level task is checked!');}
+let toastId;function toast(s){const el=document.getElementById('toast');el.textContent=s;el.classList.add('show');clearTimeout(toastId);toastId=setTimeout(()=>el.classList.remove('show'),2500);}
+document.addEventListener('change',e=>{
+ if(e.target.matches('input[type="checkbox"][data-key]')){state.checks[e.target.dataset.key]=e.target.checked;refresh();}
+});
+document.addEventListener('click',e=>{
+ const range=e.target.closest('[data-range]');if(range){state.range=range.dataset.range;renderLevels();save();return;}
+ const nav=e.target.closest('[data-tab]');if(nav){tab(nav.dataset.tab);return;}
+ const full=e.target.closest('[data-level][data-complete]');if(full){const n=Number(full.dataset.level),val=full.dataset.complete!=='1';state.checks[`attr_l${n}`]=val;state.checks[`perk_l${n}`]=val;refresh();return;}
+});
+document.getElementById('levelFilter').addEventListener('change',e=>{state.filter=e.target.value;renderLevels()});
+document.getElementById('nextBtn').addEventListener('click',next);
+document.getElementById('jumpBtn').addEventListener('click',()=>goToLevel(document.getElementById('jumpLevel').value));
+document.getElementById('jumpLevel').addEventListener('keydown',e=>{if(e.key==='Enter')goToLevel(e.target.value)});
+document.getElementById('exportBtn').addEventListener('click',()=>{
+ const content=JSON.stringify({app:'Cyberpunk 2077 Ghost Netrunner Checklist',version:1,exported:new Date().toISOString(),checks:state.checks},null,2);
+ const blob=new Blob([content],{type:'application/json'}),url=URL.createObjectURL(blob);
+ const a=document.createElement('a');a.href=url;a.download='ghost-netrunner-progress.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),2000);toast('Progress backup downloaded');
+});
+document.getElementById('importBtn').addEventListener('click',()=>document.getElementById('importFile').click());
+document.getElementById('importFile').addEventListener('change',async e=>{
+ const file=e.target.files?.[0];if(!file)return;
+ try{const payload=JSON.parse(await file.text());if(!payload||payload.version!==1||!payload.checks||typeof payload.checks!=='object')throw Error('Invalid backup');
+ const keys=Object.keys(payload.checks).filter(key=>allowed.has(key));if(!keys.length)throw Error('No matching tasks');
+ if(!confirm(`Restore ${keys.length} saved checklist entries? This replaces your current ticks.`))return;
+ state.checks={};for(const key of keys)state.checks[key]=payload.checks[key]===true;
+ refresh();toast('Backup restored successfully');
+ }catch(err){alert('Could not restore this backup. Make sure it is a Ghost Netrunner progress JSON file.');}finally{e.target.value='';}
+});
+document.getElementById('resetBtn').addEventListener('click',()=>{
+ if(confirm('Clear every completed checkbox? Export a backup first if you want to keep your progress.')){state.checks={};refresh();toast('All checkboxes reset');}
+});
+load();refresh();tab('levels');
+if('serviceWorker' in navigator && /^https?:$/.test(location.protocol)){
+ window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+}
+</script>
+</body>
+</html>
