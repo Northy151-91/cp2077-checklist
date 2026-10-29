@@ -1,7 +1,7 @@
 {
   "name": "Ghost Netrunner Checklist — CP2077 Update 2.5",
   "short_name": "Netrunner",
-  "description": "Mobile checklist for Cyberpunk 2077 Ghost Netrunner level progression.",
+  "description": "Offline level 1–60 Ghost Netrunner checklist with slot-by-slot cyberware gear and collectibles.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

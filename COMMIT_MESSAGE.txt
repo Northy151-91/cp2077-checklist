@@ -1,0 +1,8 @@
+feat(gear): add complete slot-by-slot cyberware and loadout tracker
+
+- Split Gear into 10 body sections plus quickhacks and weapons
+- List every target implant, source, unlock and planned slot
+- Mark locked, story-only, optional and intentionally empty slots
+- Add independent obtained/equipped checkboxes and section filters
+- Preserve existing progress, legacy backup import and collectibles
+- Bump PWA service worker cache for GitHub Pages upgrades
