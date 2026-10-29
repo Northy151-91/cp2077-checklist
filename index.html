@@ -102,6 +102,9 @@
   .collect-count{font-weight:800;color:var(--green);font-size:.78rem}
   @media(max-width:370px){.nav-btn{font-size:.67rem}.nav-btn .navico{font-size:1.14rem}}
 
+  /* Keep all checklist section titles consistently left-aligned. */
+  .sectionbar h2,.title-inline h2,.panel h3,.group-heading,.collect-grouphead,.gear-slot-id,.gear-summary-sub{ text-align:left; }
+
   /* v3: body-slot equipment guide */
   .gear-tools{display:flex;gap:12px;justify-content:space-between;align-items:center;flex-wrap:wrap;margin-bottom:12px}
   .gear-tools label{display:flex;align-items:center;gap:8px;font-size:.8rem;color:var(--muted)}
@@ -109,13 +112,14 @@
   .gear-jumps{display:flex;overflow-x:auto;gap:7px;scrollbar-width:thin;padding:2px 0 14px;margin-bottom:5px}
   .gear-jump{white-space:nowrap;flex-shrink:0;border:1px solid var(--line);color:var(--ink);background:var(--panel2);font-size:.77rem;font-weight:700;padding:9px 12px;border-radius:30px;min-height:40px}
   .gear-group{border:1px solid var(--line);background:var(--panel);border-radius:15px;margin:0 0 11px;overflow:hidden;scroll-margin-top:14px}
-  .gear-summary{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:64px;padding:12px 14px;cursor:pointer}
+  .gear-summary{list-style:none;display:flex;align-items:center;justify-content:flex-start;gap:10px;min-height:64px;padding:12px 14px;cursor:pointer;text-align:left}
   .gear-summary::-webkit-details-marker{display:none}
-  .gear-summary::before{content:'▸';color:var(--yellow);font-size:1rem;margin-right:1px}
+  .gear-summary::before{content:'▸';color:var(--yellow);font-size:1rem;flex:0 0 auto;margin-right:1px}
   details[open]>.gear-summary::before{content:'▾'}
-  .gear-summary strong{color:var(--yellow);font-size:.97rem}
+  .gear-summary > div{flex:1;min-width:0;text-align:left}
+  .gear-summary strong{color:var(--yellow);font-size:.97rem;display:block;text-align:left}
   .gear-summary-sub{color:var(--muted);font-size:.74rem;margin-top:3px}
-  .gear-substat{font-size:.69rem;color:var(--green);font-weight:800;white-space:nowrap}
+  .gear-substat{font-size:.69rem;color:var(--green);font-weight:800;white-space:nowrap;margin-left:auto;flex:0 0 auto;text-align:right}
   .gear-body{border-top:1px solid var(--line);padding:12px 12px 3px}
   .gear-slot{background:var(--panel2);border:1px solid #3c4a56;border-radius:13px;padding:12px;margin-bottom:11px}
   .gear-slot.installed{border-color:#498267;background:#172a25}
@@ -125,7 +129,7 @@
   .gear-status{font-size:.62rem;letter-spacing:.025em;border:1px solid var(--line);background:#34414e;color:#d0e7f2;padding:4px 7px;border-radius:7px;font-weight:900}
   .gear-status.prio-core{border-color:#5f6443;background:#403b23;color:var(--yellow)}
   .gear-status.empty-tag{background:#493536;color:#ffd6b3}
-  .gear-item-name{font-size:1rem;display:block;line-height:1.35}
+  .gear-item-name{font-size:1rem;display:block;line-height:1.35;text-align:left}
   .gear-copy{font-size:.79rem;line-height:1.47;color:#d4dfeb;margin:8px 0}
   .gear-copy b{color:var(--blue)}
   .gear-note{background:#4b3828;border-left:3px solid #ffc17d;color:#fff1d3;padding:9px;border-radius:5px;font-size:.75rem;margin:7px 0}

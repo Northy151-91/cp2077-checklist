@@ -1,3 +1,9 @@
+# v3.1 — Mobile gear heading alignment
+- Left-align every gear category title and its subheading.
+- Keep the fitted progress number pinned right instead of centering the category title.
+- Left-align item titles and all checklist section headings.
+- Bump PWA cache version. Existing progress and data unchanged.
+
 # Changelog
 
 ## v3.0 — Body-slot Gear Guide (2026-10-29)

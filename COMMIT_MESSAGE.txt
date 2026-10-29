@@ -1,8 +1,7 @@
-feat(gear): add complete slot-by-slot cyberware and loadout tracker
+fix(ui): left-align gear section headings on mobile
 
-- Split Gear into 10 body sections plus quickhacks and weapons
-- List every target implant, source, unlock and planned slot
-- Mark locked, story-only, optional and intentionally empty slots
-- Add independent obtained/equipped checkboxes and section filters
-- Preserve existing progress, legacy backup import and collectibles
-- Bump PWA service worker cache for GitHub Pages upgrades
+- Fix Gear accordion layout so category headings start immediately after the arrow
+- Keep fitted counts right-aligned independently of the heading text
+- Left-align gear item names and headings consistently across checklist tabs
+- Preserve all 159 build tasks, collectibles and gear checkboxes
+- Bump PWA cache to v3.1 so the updated layout loads after deployment

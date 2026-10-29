@@ -1,6 +1,12 @@
-# Ghost Netrunner Checklist — Gear v3
+# Ghost Netrunner Checklist — Gear v3.1
 
 GitHub Pages-ready PWA for Cyberpunk 2077 Update 2.5 and Phantom Liberty.
+
+## v3.1 layout fix
+- Fixed inconsistent centering of Gear accordion headings in the mobile layout.
+- All gear category headings and gear item titles are left-aligned; fitted counts stay on the right.
+- Updated service-worker cache to ensure the fix appears on installed apps.
+- All checklist and saved-progress data remain unchanged.
 
 ## What's new
 - Gear tab reorganised into 10 cyberware body parts, plus Weapons and Quickhacks.
